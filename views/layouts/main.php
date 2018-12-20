@@ -31,7 +31,7 @@ $this->beginPage(); ?>
         'options' => [
             'class' => 'navbar-nav navbar-left small'],
         'items' => [
-            ['label' => 'Сенсоры', 'url' => ['sensors']],
+            ['label' => 'Сенсоры', 'url' => 'sensors'],
 
         ],
     ]);
