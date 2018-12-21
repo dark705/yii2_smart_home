@@ -7,3 +7,10 @@
  */
 ?>
 <h1>Показания датчиков</h1>
+<div class="chart">
+    <a name="chart__electro"></a>
+    <?=$this->render('_pzem004t');?>
+</div>
+
+
+
