@@ -16,6 +16,7 @@ use yii\web\View;
                 'chart' => [
                     'height' => 800
                 ],
+                'rangeSelector' => $rangeSelectorObj,
                 'title' => [
                         'text' => 'Электросеть'
                 ],
