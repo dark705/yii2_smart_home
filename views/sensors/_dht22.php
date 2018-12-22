@@ -14,7 +14,7 @@ use yii\web\View;
         'id' => 'dht22',
         'options' => [
             'chart' => [
-                'height' => 500
+                'height' => 500,
             ],
             'rangeSelector' => $rangeSelectorObj,
 

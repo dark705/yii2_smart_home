@@ -12,9 +12,15 @@ use yii\web\View;
     <?php
     echo Highstock::widget([
         'id' => 'pzem004t',
+        'scripts' => [
+            'lang/ru',
+            'modules/exporting',
+            'themes/grid-light',
+
+        ],
         'options' => [
                 'chart' => [
-                    'height' => 800
+                    'height' => 800,
                 ],
                 'rangeSelector' => $rangeSelectorObj,
                 'title' => [

@@ -7,11 +7,13 @@
  */
 
 namespace app\controllers;
+use app\models\SensorDs18b20;
 use yii\web\Controller;
 
 class SensorsController extends Controller
 {
     public function actionIndex(){
-        return $this->render('index');
+        $ds18b20 = new SensorDs18b20();
+        return $this->render('index', compact('ds18b20'));
     }
 }

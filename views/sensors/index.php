@@ -6,7 +6,7 @@
  * Time: 2:00
  */
 
-use yii\web\View;
+
 
 ?>
 <h1>Показания датчиков</h1>
@@ -27,14 +27,26 @@ use yii\web\View;
 
 
 ?>
-<div class="chart">
-    <a name="chart__electro"></a>
-    <?=$this->render('_pzem004t', compact('rangeSelectorObj'));?>
+
+<div class="container-fluid .overflow-hide">
+    <div class="chart">
+        <a name="chart__electro"></a>
+        <?=$this->render('_pzem004t', compact('rangeSelectorObj'));?>
+    </div>
+
+    <div class="chart">
+        <a name="chart__dht22"></a>
+        <?=$this->render('_dht22',  compact('rangeSelectorObj'));?>
+    </div>
+    <?foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
+        <div class="chart">
+            <a name="chart__<?=$sensor['serial']?>"></a>
+            <?=$this->render('_ds18b20',  compact('rangeSelectorObj','sensor'));?>
+        </div>
+    <?endforeach;?>
 </div>
-<div class="chart">
-    <a name="chart__dht22"></a>
-    <?=$this->render('_dht22',  compact('rangeSelectorObj'));?>
-</div>
+
+
 
 
 
