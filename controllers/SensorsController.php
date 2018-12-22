@@ -9,6 +9,7 @@
 namespace app\controllers;
 use app\models\SensorDht22;
 use app\models\SensorDs18b20;
+use app\models\SensorPzem004t;
 use yii\web\Controller;
 
 class SensorsController extends Controller
@@ -16,6 +17,7 @@ class SensorsController extends Controller
     public function actionIndex(){
         $ds18b20 = new SensorDs18b20();
         $dht22 = new SensorDht22();
-        return $this->render('index', compact(['dht22','ds18b20']));
+        $pzem004t = new SensorPzem004t();
+        return $this->render('index', compact(['pzem004t','dht22','ds18b20']));
     }
 }

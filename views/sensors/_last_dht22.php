@@ -5,8 +5,6 @@
  * Date: 21.12.2018
  * Time: 2:00
  */
-use miloschuman\highcharts\Highstock;
-use yii\web\View;
 ?>
 <a class="itemlink" href="#chart__weather">
     <div id="last__weather" class="item ">

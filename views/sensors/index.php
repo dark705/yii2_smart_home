@@ -5,9 +5,6 @@
  * Date: 21.12.2018
  * Time: 2:00
  */
-
-
-
 ?>
 <h1>Показания датчиков</h1>
 
@@ -27,6 +24,9 @@
 
 <div class="container-fluid .overflow-hide">
     <div id="lasts">
+        <div class="last">
+            <?=$this->render('_last_pzem004t', compact('pzem004t'));?>
+        </div>
 
         <div class="last">
             <?=$this->render('_last_dht22', compact('dht22'));?>
@@ -37,6 +37,7 @@
             <?=$this->render('_last_ds18b20', compact(['sensor', 'ds18b20']));?>
         </div>
         <?php endforeach;?>
+
         <div class="clear"></div>
     </div>
 
@@ -46,9 +47,10 @@
     </div>
 
     <div class="chart">
-        <a name="chart__dht22"></a>
+        <a name="chart__weather"></a>
         <?=$this->render('_dht22',  compact('rangeSelectorObj'));?>
     </div>
+
     <?foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
         <div class="chart">
             <a name="chart__<?=$sensor['serial']?>"></a>
