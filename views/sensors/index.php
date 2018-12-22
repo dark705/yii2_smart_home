@@ -19,25 +19,25 @@
             ['type' => 'week', 'count' => 1, 'text' => 'нед'],
             ['type' => 'month', 'count' => 1, 'text' => 'мес']
         ]
-    ]
+    ];
+    $intervalUpdateLast = 20;
 ?>
 
 <div class="container-fluid .overflow-hide">
     <div id="lasts">
         <div class="last">
-            <?=$this->render('_last_pzem004t', compact('pzem004t'));?>
+            <?=$this->render('_last_pzem004t', compact(['pzem004t', 'intervalUpdateLast']));?>
         </div>
 
         <div class="last">
-            <?=$this->render('_last_dht22', compact('dht22'));?>
+            <?=$this->render('_last_dht22', compact(['dht22', 'intervalUpdateLast']));?>
         </div>
 
         <?php foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
         <div class="last">
-            <?=$this->render('_last_ds18b20', compact(['sensor', 'ds18b20']));?>
+            <?=$this->render('_last_ds18b20', compact(['ds18b20', 'sensor', 'intervalUpdateLast']));?>
         </div>
         <?php endforeach;?>
-
         <div class="clear"></div>
     </div>
 
