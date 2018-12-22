@@ -27,8 +27,15 @@
 
 <div class="container-fluid .overflow-hide">
     <div id="lasts">
+
+        <div class="last">
+            <?=$this->render('_last_dht22', compact('dht22'));?>
+        </div>
+
         <?php foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
+        <div class="last">
             <?=$this->render('_last_ds18b20', compact(['sensor', 'ds18b20']));?>
+        </div>
         <?php endforeach;?>
         <div class="clear"></div>
     </div>
@@ -45,7 +52,7 @@
     <?foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
         <div class="chart">
             <a name="chart__<?=$sensor['serial']?>"></a>
-            <?=$this->render('_ds18b20',  compact('rangeSelectorObj','sensor'));?>
+            <?=$this->render('_ds18b20',  compact(['rangeSelectorObj','sensor']));?>
         </div>
     <?endforeach;?>
 </div>

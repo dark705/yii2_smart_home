@@ -14,26 +14,26 @@ use yii\db\Query;
 class SensorDs18b20 extends ActiveRecord
 {
 
-    private static $sensorsInfo;
+    private $allSensorsInfo;
 
     public static function tableName(){
         return 'ds18b20';
     }
     
     public function getAllSensorsInfo(){
-        if (!static::$sensorsInfo){
+        if (!$this->allSensorsInfo){
             $subQuery = (new Query())
                 ->select('serial')
                 ->from('ds18b20')
                 ->distinct();
 
-            static::$sensorsInfo =  (new Query())->select('distinct.serial, ds18b20_names.name')
+            $this->allSensorsInfo =  (new Query())->select('distinct.serial, ds18b20_names.name')
                 ->from('ds18b20_names')
                 ->rightJoin(['distinct' => $subQuery], 'distinct.serial = ds18b20_names.serial')
                 ->all();
-            return   static::$sensorsInfo;
+            return   $this->allSensorsInfo;
         } else {
-            return   static::$sensorsInfo;
+            return  $this->allSensorsInfo;
         }
     }
 
