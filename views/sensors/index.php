@@ -12,7 +12,6 @@
 <h1>Показания датчиков</h1>
 
 <?php
-
     $rangeSelectorObj = [
         'selected' => 3,
         'buttons' => [
@@ -24,11 +23,16 @@
             ['type' => 'month', 'count' => 1, 'text' => 'мес']
         ]
     ]
-
-
 ?>
 
 <div class="container-fluid .overflow-hide">
+    <div id="lasts">
+        <?php foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
+            <?=$this->render('_last_ds18b20', compact(['sensor', 'ds18b20']));?>
+        <?php endforeach;?>
+        <div class="clear"></div>
+    </div>
+
     <div class="chart">
         <a name="chart__electro"></a>
         <?=$this->render('_pzem004t', compact('rangeSelectorObj'));?>
