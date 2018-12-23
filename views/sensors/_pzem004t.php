@@ -106,31 +106,20 @@ use yii\web\View;
     ]);
     $this->registerJs(
         "
-            var w1 = $('#pzem004t').highcharts();
-            w1.showLoading();
-            console.time('t1');
-            console.time('t2');
-            console.time('t3');
-            console.time('t4');
-            console.log('begin');
-            console.timeEnd('t1');
+            var chartPzem004t = $('#pzem004t').highcharts();
+            chartPzem004t.showLoading();
+
              $.getJSON('sensors/json?sensor=pzem004t', function (data) {
-             console.log('start loading');
-             console.timeEnd('t2');
                 var voltage = [], current = [], active = [];
                 $.each(data, function(index, value){
 					voltage.push([value.datetime * 1000, value.voltage]);
 					current.push([value.datetime * 1000, value.current]);
 					active.push([value.datetime * 1000, value.active]);
                 });
-                console.log('array ready');
-                console.timeEnd('t3');
-                w1.series[0].setData(voltage, false);
-                w1.series[1].setData(current, false);
-                w1.series[2].setData(active, true);
-                w1.hideLoading();
-                console.log('complete set data');
-                console.timeEnd('t4');
+                chartPzem004t.series[0].setData(voltage, false);
+                chartPzem004t.series[1].setData(current, false);
+                chartPzem004t.series[2].setData(active, true);
+                chartPzem004t.hideLoading();
            });
         ",
         View::POS_READY

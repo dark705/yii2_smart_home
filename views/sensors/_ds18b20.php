@@ -56,7 +56,7 @@ use yii\web\View;
             $.getJSON('sensors/json?sensor=ds18b20&serial=" . $sensor['serial']. "', function (data) {
                 var temperature = [];
                 $.each(data, function(index, value){
-					temperature.push([data[index]['datetime'] * 1000, data[index]['temperature']]);
+					temperature.push([value.datetime * 1000, value.temperature]);
                 });    
                 chartDs18b20__" . md5($sensor['serial']) . ".series[0].setData(temperature);
                 chartDs18b20__" . md5($sensor['serial']) . ".hideLoading();

@@ -35,23 +35,23 @@ class SensorsController extends Controller
 
         switch($request->get('sensor')){
             case 'pzem004t':
-                $records = new RecordsPzem004t();
+                $recordsModel = new RecordsPzem004t();
                 break;
             case 'dht22':
-                $records = new RecordsDht22();
+                $recordsModel = new RecordsDht22();
                 break;
             case 'ds18b20':
-                $records = new RecordsDs18b20();
+                $recordsModel = new RecordsDs18b20();
                 break;
         }
 
         if($request->get('sensor') ==  'ds18b20' && !is_null($request->get('names')))
-            return $records->getAllSensorsNames();
+            return $recordsModel->getAllSensorsNames();
 
         if( !is_null($request->get('last'))){
-            return $records->getLast($request->get('serial'));
+            return $recordsModel->getLast($request->get('serial'));
         } else {
-            return $records->get($request->get('serial'), 31);
+            return $recordsModel->get($request->get('serial'), 31);
 
         }
 
