@@ -25,19 +25,23 @@
 
 <div class="container-fluid .overflow-hide">
     <div id="lasts">
+        <!-- start electro last section -->
         <div class="last">
             <?=$this->render('_last_pzem004t', compact(['pzem004t', 'intervalUpdateLast']));?>
         </div>
-
+        <!-- end -->
+        <!-- start weather last section -->
         <div class="last">
             <?=$this->render('_last_dht22', compact(['dht22', 'intervalUpdateLast']));?>
         </div>
-
+        <!-- end -->
+        <!-- start ds18b20 last section -->
         <?php foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
         <div class="last">
             <?=$this->render('_last_ds18b20', compact(['ds18b20', 'sensor', 'intervalUpdateLast']));?>
         </div>
         <?php endforeach;?>
+        <!-- end -->
         <div class="clear"></div>
     </div>
 

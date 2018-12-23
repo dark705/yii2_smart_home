@@ -7,9 +7,10 @@
  */
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use yii\helpers\Url;
-
-$this->beginPage(); ?>
+use app\assets\AppAsset;
+AppAsset::register($this);
+?>
+<?php $this->beginPage(); ?>
     <!doctype html>
     <html lang="ru">
     <head>

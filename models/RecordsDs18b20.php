@@ -7,19 +7,13 @@
  */
 
 namespace app\models;
-use Yii;
-use yii\db\ActiveRecord;
 use yii\db\Query;
 
-class SensorDs18b20 extends ActiveRecord
+class RecordsDs18b20 extends Query
 {
 
     private $allSensorsInfo;
 
-    public static function tableName(){
-        return 'ds18b20';
-    }
-    
     public function getAllSensorsInfo(){
         if (!$this->allSensorsInfo){
             $subQuery = (new Query())
@@ -38,6 +32,13 @@ class SensorDs18b20 extends ActiveRecord
     }
 
     public function getLastInfo($serial){
-        return static::find()->where(['serial' => $serial])->orderBy('datetime DESC')->limit(1)->one();
+        return (new Query)
+            ->select(['datetime', 'serial', 'temperature'])
+            ->from('ds18b20')
+            ->where(['serial' => $serial])
+            ->orderBy('datetime DESC')
+            ->limit(1)
+            ->one();
     }
+
 }
