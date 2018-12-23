@@ -12,7 +12,7 @@ use yii\web\View;
 <a class="itemlink" href="#chart__electro">
     <div id="last__electro" class="item">
         <h3>Электросеть:</h3>
-        <?php $lastE = $pzem004t->getLastInfo();?>
+        <?php $lastE = $pzem004t->getLast();?>
         <p id="last__electro__time" class="ontime" >(показания на: <span><?=$lastE['datetime'];?></span>)</p>
         <p id="last__electro__voltage">Напряжение: <span><?=$lastE['voltage'];?></span></p>
         <p id="last__electro__current">Ток: <span><?=$lastE['current'];?></span></p>

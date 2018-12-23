@@ -46,10 +46,10 @@ class SensorsController extends Controller
         }
 
         if($request->get('sensor') ==  'ds18b20' && !is_null($request->get('names')))
-            return $records->getAllSensorsInfo();
+            return $records->getAllSensorsNames();
 
         if( !is_null($request->get('last'))){
-            return $records->getLastInfo($request->get('serial'));
+            return $records->getLast($request->get('serial'));
         } else {
             return $records->get($request->get('serial'));
 

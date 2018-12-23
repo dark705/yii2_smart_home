@@ -9,10 +9,10 @@
 namespace app\models;
 use yii\db\Query;
 
-class RecordsPzem004t extends Query
+class RecordsPzem004t extends Query implements RecordsInterface
 {
 
-    public function getLastInfo(){
+    public function getLast($serial = null){
         return (new Query())
             ->select(['datetime', 'voltage', 'current', 'active'])
             ->from('pzem004t')
@@ -21,7 +21,11 @@ class RecordsPzem004t extends Query
             ->one();
     }
 
-    public function get(){
-        return (new Query())->select(['datetime', 'voltage', 'current', 'active'])->from('pzem004t')->where('datetime > NOW() - INTERVAL 10 DAY')->all();
+    public function get($serial = null){
+        return (new Query())
+            ->select(['datetime', 'voltage', 'current', 'active'])
+            ->from('pzem004t')
+            ->where('datetime > NOW() - INTERVAL 10 DAY')
+            ->all();
     }
 }

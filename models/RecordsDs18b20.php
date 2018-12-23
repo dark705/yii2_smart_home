@@ -9,29 +9,34 @@
 namespace app\models;
 use yii\db\Query;
 
-class RecordsDs18b20 extends Query
+class RecordsDs18b20 extends Query implements RecordsInterface
 {
 
-    private $allSensorsInfo;
+    private $allSensorsNames;
 
-    public function getAllSensorsInfo(){
-        if (!$this->allSensorsInfo){
+    public function getAllSensorsNames(){
+        if (!$this->allSensorsNames){
             $subQuery = (new Query())
                 ->select('serial')
                 ->from('ds18b20')
                 ->distinct();
 
-            $this->allSensorsInfo =  (new Query())->select('distinct.serial, ds18b20_names.name')
+            $this->allSensorsNames =  (new Query())->select('distinct.serial, ds18b20_names.name')
                 ->from('ds18b20_names')
                 ->rightJoin(['distinct' => $subQuery], 'distinct.serial = ds18b20_names.serial')
                 ->all();
-            return   $this->allSensorsInfo;
+            return   $this->allSensorsNames;
         } else {
-            return  $this->allSensorsInfo;
+            return  $this->allSensorsNames;
         }
     }
 
-    public function getLastInfo($serial){
+
+
+    public function getLast($serial){
+        if(!$this->validate($serial))
+            return false;
+
         return (new Query)
             ->select(['datetime', 'serial', 'temperature'])
             ->from('ds18b20')
@@ -41,4 +46,22 @@ class RecordsDs18b20 extends Query
             ->one();
     }
 
+    public function get($serial){
+        if(!$this->validate($serial))
+            return false;
+
+        return (new Query())
+            ->select(['datetime', 'serial', 'temperature'])
+            ->from('ds18b20')
+            ->where('datetime > NOW() - INTERVAL 10 DAY')
+            ->all();
+    }
+
+    private function validate($serial){
+        foreach($this->getAllSensorsNames() as $record){
+            $record['serial'] == $serial;
+            return  true;
+        }
+        return false;
+    }
 }

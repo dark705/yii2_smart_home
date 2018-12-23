@@ -12,7 +12,7 @@ use yii\web\View;
 <a class="itemlink" href="#chart__<?=$sensor['serial']?>">
     <div id="<?=$sensor['serial']?>" class="item last__ds18b20">
         <h3><?=$sensor['name']?></h3>
-        <?php $lastD = $ds18b20->getLastInfo($sensor['serial']);?>
+        <?php $lastD = $ds18b20->getLast($sensor['serial']);?>
         <p class="last__ds18b20__time ontime">(показания на: <span><?=$lastD['datetime'];?></span>)</p>
         <p class="last__ds18b20__temp">Температура: <span><?=$lastD['temperature'];?></span></p>
     </div>

@@ -36,7 +36,7 @@
         </div>
         <!-- end -->
         <!-- start ds18b20 last section -->
-        <?php foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
+        <?php foreach($ds18b20->getAllSensorsNames() as $sensor):?>
         <div class="last">
             <?=$this->render('_last_ds18b20', compact(['ds18b20', 'sensor', 'intervalUpdateLast']));?>
         </div>
@@ -55,7 +55,7 @@
         <?=$this->render('_dht22',  compact('rangeSelectorObj'));?>
     </div>
 
-    <?foreach($ds18b20->getAllSensorsInfo() as $sensor):?>
+    <?foreach($ds18b20->getAllSensorsNames() as $sensor):?>
         <div class="chart">
             <a name="chart__<?=$sensor['serial']?>"></a>
             <?=$this->render('_ds18b20',  compact(['rangeSelectorObj','sensor']));?>
