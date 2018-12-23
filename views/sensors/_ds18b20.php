@@ -58,7 +58,7 @@ use yii\web\View;
                 $.each(data, function(index, value){
                     var ts = Date.parse(value.datetime);
                     ts.setHours(ts.getHours() + 3);
-                    temperature.push([ts, +value.temperature]);   
+                    temperature.push([+ts, +value.temperature]);   
                 });    
                 chartDs18b20__" . md5($sensor['serial']) . ".series[0].setData(temperature);
                 chartDs18b20__" . md5($sensor['serial']) . ".hideLoading();

@@ -110,22 +110,20 @@ use yii\web\View;
             w1.showLoading();
              $.getJSON('json?sensor=pzem004t', function (data) {
                 var voltage = [], current = [], active = [];
-                var ts;
                 $.each(data, function(index, value){
-                    ts = Date.parse(value.datetime);
+                    var ts = Date.parse(value.datetime);
                     ts.setHours(ts.getHours() + 3);
-                    voltage.push([ts, +value.voltage]);
-                    current.push([ts, +value.current]);
-                    active.push([ts, +value.active]);
+                    voltage.push([+ts, +value.voltage]);
+                    current.push([+ts, +value.current]);
+                    active.push([+ts, +value.active]);
                 });
-                   console.log(ts);
                 w1.series[0].setData(voltage, false);
                 w1.series[1].setData(current, false);
                 w1.series[2].setData(active, true);
                 w1.hideLoading();
            });
         ",
-        View::POS_READY, 'pzem004t'
+        View::POS_READY
     );
     ?>
 

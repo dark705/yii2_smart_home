@@ -33,8 +33,6 @@ $this->registerJs(
             $('#last__electro').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
         });
     }
-    updateLastElectro();
-    
     setInterval(function(){
 		updateLastElectro();
 	}, {$intervalUpdateLast}*1000);

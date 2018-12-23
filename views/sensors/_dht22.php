@@ -91,22 +91,18 @@ use yii\web\View;
             chartDht22.showLoading();
             $.getJSON('json?sensor=dht22', function (data) {
 			var temperature = [], humidity = [];
-			var ts;
 			$.each(data, function(index, value){
-                ts = Date.parse(value.datetime);
+                var ts = Date.parse(value.datetime);
                 ts.setHours(ts.getHours() + 3);
-				temperature.push([ts, +value.temperature]);
-				humidity.push([ts, +value.humidity]);
+				temperature.push([+ts, +value.temperature]);
+				humidity.push([+ts, +value.humidity]);
 			});
-			console.log(ts);
-			
 			chartDht22.series[0].setData(temperature, false);
 			chartDht22.series[1].setData(humidity, true);
 			chartDht22.hideLoading();
-			
 		});
         ",
-        View::POS_READY, 'dht22'
+        View::POS_READY
     );
     ?>
 
