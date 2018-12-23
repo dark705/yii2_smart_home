@@ -12,20 +12,35 @@ use yii\db\Query;
 class RecordsPzem004t implements RecordsInterface
 {
 
+    private static function convertTypes($records){
+        foreach ($records as $key => $record){
+            $convertedRecord = [
+                'datetime' => strtotime($record['datetime']),
+                'voltage' => (float)$record['voltage'],
+                'current' => (float)$record['current'],
+                'active' => (float)$record['active']
+                ];
+            $records[$key] = $convertedRecord;
+        }
+        return $records;
+    }
+
     public function getLast($serial = null){
-        return (new Query())
+        $records = (new Query())
             ->select(['datetime', 'voltage', 'current', 'active'])
             ->from('pzem004t')
             ->orderBy('datetime DESC')
             ->limit(1)
-            ->one();
+            ->all();
+        return static::convertTypes($records);
     }
 
     public function get($serial = null, $days = 10){
-        return (new Query())
+        $records = (new Query())
             ->select(['datetime', 'voltage', 'current', 'active'])
             ->from('pzem004t')
             ->where('datetime > NOW() - INTERVAL ' . $days . ' DAY')
             ->all();
+        return static::convertTypes($records);
     }
 }

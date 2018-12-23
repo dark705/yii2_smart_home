@@ -12,8 +12,8 @@ use yii\web\View;
 <a class="itemlink" href="#chart__electro">
     <div id="last__electro" class="item">
         <h3>Электросеть:</h3>
-        <?php $lastE = $pzem004t->getLast();?>
-        <p id="last__electro__time" class="ontime" >(показания на: <span><?=$lastE['datetime'];?></span>)</p>
+        <?php $lastE = $pzem004t->getLast()[0];?>
+        <p id="last__electro__time" class="ontime" >(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastE['datetime']);?></span>)</p>
         <p id="last__electro__voltage">Напряжение: <span><?=$lastE['voltage'];?></span></p>
         <p id="last__electro__current">Ток: <span><?=$lastE['current'];?></span></p>
         <p id="last__electro__active">Мощность: <span><?=$lastE['active'];?></span></p>
@@ -23,9 +23,10 @@ use yii\web\View;
 $this->registerJs(
     "
     function updateLastElectro(){
-        $.getJSON('json?sensor=pzem004t&last', function(data){
-            //var d = new Date((data.datetime - 3*60*60) * 1000);
-            //data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
+        $.getJSON('sensors/json?sensor=pzem004t&last', function(data){
+            data = data[0];
+            var d = new Date((data.datetime - 3*60*60) * 1000);
+            data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
             $('#last__electro__time span').text(data.datetime);
             $('#last__electro__voltage span').text(data.voltage);
             $('#last__electro__current span').text(data.current);

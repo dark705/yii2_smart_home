@@ -13,6 +13,18 @@ class RecordsDs18b20 implements RecordsInterface
 {
     private $allSensorsNames;
 
+    private static function convertTypes($records){
+        foreach ($records as $key => $record){
+            $convertedRecord = [
+                'datetime' => strtotime($record['datetime']),
+                'serial' => (float)$record['serial'],
+                'temperature' => (float)$record['temperature'],
+            ];
+            $records[$key] = $convertedRecord;
+        }
+        return $records;
+    }
+
     public function getAllSensorsNames(){
         if (!$this->allSensorsNames){
             $subQuery = (new Query())
@@ -34,25 +46,27 @@ class RecordsDs18b20 implements RecordsInterface
         if(!$this->validate($serial))
             return false;
 
-        return (new Query)
+        $records = (new Query)
             ->select(['datetime', 'serial', 'temperature'])
             ->from('ds18b20')
             ->where(['serial' => $serial])
             ->orderBy('datetime DESC')
             ->limit(1)
-            ->one();
+            ->all();
+        return static::convertTypes($records);
     }
 
     public function get($serial, $days = 10){
         if(!$this->validate($serial))
             return false;
 
-        return (new Query())
+        $records = (new Query())
             ->select(['datetime', 'serial', 'temperature'])
             ->from('ds18b20')
             ->where(['serial' => $serial])
             ->andWhere('datetime > NOW() - INTERVAL ' . $days . ' DAY')
             ->all();
+        return static::convertTypes($records);
     }
 
     private function validate($serial){

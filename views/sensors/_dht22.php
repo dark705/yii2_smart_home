@@ -89,13 +89,11 @@ use yii\web\View;
         "
             var chartDht22 = $('#dht22').highcharts();
             chartDht22.showLoading();
-            $.getJSON('json?sensor=dht22', function (data) {
+            $.getJSON('sensors/json?sensor=dht22', function (data) {
 			var temperature = [], humidity = [];
 			$.each(data, function(index, value){
-                var ts = Date.parse(value.datetime);
-                ts.setHours(ts.getHours() + 3);
-				temperature.push([+ts, +value.temperature]);
-				humidity.push([+ts, +value.humidity]);
+				temperature.push([value.datetime * 1000, value.temperature]);
+				humidity.push([value.datetime * 1000, value.humidity]);	
 			});
 			chartDht22.series[0].setData(temperature, false);
 			chartDht22.series[1].setData(humidity, true);

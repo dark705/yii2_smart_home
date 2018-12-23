@@ -12,8 +12,8 @@ use yii\web\View;
 <a class="itemlink" href="#chart__weather">
     <div id="last__weather" class="item ">
         <h3>Погода:</h3>
-        <?php $lastW = $dht22->getLast();?>
-        <p id="last__weather__time" class="ontime">(показания на: <span><?=$lastW['datetime']?></span>)</p>
+        <?php $lastW = $dht22->getLast()[0];?>
+        <p id="last__weather__time" class="ontime">(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastW['datetime'])?></span>)</p>
         <p id="last__weather__temp">Температура: <span><?=$lastW['temperature']?></span></p>
         <p id="last__weather__humidity">Влажность: <span><?=$lastW['humidity']?></span></p>
     </div>
@@ -22,9 +22,10 @@ use yii\web\View;
 $this->registerJs(
     "
 	function updateLastWeather(){
-		$.getJSON('json?sensor=dht22&last', function(data){
-			//var d = new Date((data.datetime - 3*60*60) * 1000);
-			//data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
+		$.getJSON('sensors/json?sensor=dht22&last', function(data){
+		    data = data[0];
+			var d = new Date((data.datetime - 3*60*60) * 1000);
+			data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
 			$('#last__weather__time span').text(data.datetime);
 			$('#last__weather__temp span').text(data.temperature);
 			$('#last__weather__humidity span').text(data.humidity);
