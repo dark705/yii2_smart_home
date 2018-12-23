@@ -21,11 +21,11 @@ class RecordsPzem004t extends Query implements RecordsInterface
             ->one();
     }
 
-    public function get($serial = null){
+    public function get($serial = null, $days = 10){
         return (new Query())
             ->select(['datetime', 'voltage', 'current', 'active'])
             ->from('pzem004t')
-            ->where('datetime > NOW() - INTERVAL 10 DAY')
+            ->where('datetime > NOW() - INTERVAL ' . $days . ' DAY')
             ->all();
     }
 }

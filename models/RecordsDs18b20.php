@@ -11,7 +11,6 @@ use yii\db\Query;
 
 class RecordsDs18b20 extends Query implements RecordsInterface
 {
-
     private $allSensorsNames;
 
     public function getAllSensorsNames(){
@@ -31,8 +30,6 @@ class RecordsDs18b20 extends Query implements RecordsInterface
         }
     }
 
-
-
     public function getLast($serial){
         if(!$this->validate($serial))
             return false;
@@ -46,21 +43,22 @@ class RecordsDs18b20 extends Query implements RecordsInterface
             ->one();
     }
 
-    public function get($serial){
+    public function get($serial, $days = 10){
         if(!$this->validate($serial))
             return false;
 
         return (new Query())
             ->select(['datetime', 'serial', 'temperature'])
             ->from('ds18b20')
-            ->where('datetime > NOW() - INTERVAL 10 DAY')
+            ->where(['serial' => $serial])
+            ->andWhere('datetime > NOW() - INTERVAL ' . $days . ' DAY')
             ->all();
     }
 
     private function validate($serial){
         foreach($this->getAllSensorsNames() as $record){
-            $record['serial'] == $serial;
-            return  true;
+            if ($record['serial'] == $serial)
+                return  true;
         }
         return false;
     }

@@ -20,11 +20,11 @@ class RecordsDht22 extends Query implements RecordsInterface
             ->one();
     }
 
-    public function get($serial = null){
+    public function get($serial = null, $days = 10){
         return (new Query())
             ->select(['datetime', 'temperature', 'humidity'])
             ->from('dht22')
-            ->where('datetime > NOW() - INTERVAL 10 DAY')
+            ->where('datetime > NOW() - INTERVAL ' . $days . ' DAY')
             ->all();
     }
 }
