@@ -9,7 +9,7 @@
 namespace app\models;
 use yii\db\Query;
 
-class RecordsDs18b20 extends Query implements RecordsInterface
+class RecordsDs18b20 implements RecordsInterface
 {
     private $allSensorsNames;
 

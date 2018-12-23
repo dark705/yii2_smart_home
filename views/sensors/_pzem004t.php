@@ -108,13 +108,17 @@ use yii\web\View;
         "
             var w1 = $('#pzem004t').highcharts();
             w1.showLoading();
-             $.getJSON('http://192.168.23.2/chart/zero/json/json.php?sensor=pzem004t', function (data) {
+             $.getJSON('json?sensor=pzem004t', function (data) {
                 var voltage = [], current = [], active = [];
+                var ts;
                 $.each(data, function(index, value){
-                    voltage.push([value.datetime * 1000, value.voltage]);
-                    current.push([value.datetime * 1000, value.current]);
-                    active.push([value.datetime * 1000, value.active]);
+                    ts = Date.parse(value.datetime);
+                    ts.setHours(ts.getHours() + 3);
+                    voltage.push([ts, +value.voltage]);
+                    current.push([ts, +value.current]);
+                    active.push([ts, +value.active]);
                 });
+                   console.log(ts);
                 w1.series[0].setData(voltage, false);
                 w1.series[1].setData(current, false);
                 w1.series[2].setData(active, true);

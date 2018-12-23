@@ -9,7 +9,7 @@
 namespace app\models;
 use yii\db\Query;
 
-class RecordsDht22 extends Query implements RecordsInterface
+class RecordsDht22 implements RecordsInterface
 {
     public function getLast($serial = null){
         return (new Query())

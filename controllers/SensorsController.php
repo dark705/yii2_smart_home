@@ -51,7 +51,7 @@ class SensorsController extends Controller
         if( !is_null($request->get('last'))){
             return $records->getLast($request->get('serial'));
         } else {
-            return $records->get($request->get('serial'));
+            return $records->get($request->get('serial'), 1);
 
         }
 

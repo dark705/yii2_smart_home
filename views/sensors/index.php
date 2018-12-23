@@ -20,7 +20,7 @@
             ['type' => 'month', 'count' => 1, 'text' => 'мес']
         ]
     ];
-    $intervalUpdateLast = 20;
+    $intervalUpdateLast = 60;
 ?>
 
 <div class="container-fluid .overflow-hide">

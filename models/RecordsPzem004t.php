@@ -9,7 +9,7 @@
 namespace app\models;
 use yii\db\Query;
 
-class RecordsPzem004t extends Query implements RecordsInterface
+class RecordsPzem004t implements RecordsInterface
 {
 
     public function getLast($serial = null){

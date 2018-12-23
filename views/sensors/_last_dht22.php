@@ -22,10 +22,9 @@ use yii\web\View;
 $this->registerJs(
     "
 	function updateLastWeather(){
-		$.getJSON('http://192.168.23.2/chart/zero/json/json.php?sensor=dht22&last', function(data){
-			data = data[0];
-			var d = new Date((data.datetime - 3*60*60) * 1000);
-			data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
+		$.getJSON('json?sensor=dht22&last', function(data){
+			//var d = new Date((data.datetime - 3*60*60) * 1000);
+			//data.datetime = d.toString('yyyy-MM-dd HH:mm:ss');
 			$('#last__weather__time span').text(data.datetime);
 			$('#last__weather__temp span').text(data.temperature);
 			$('#last__weather__humidity span').text(data.humidity);
