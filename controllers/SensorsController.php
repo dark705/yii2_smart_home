@@ -23,17 +23,17 @@ class SensorsController extends Controller
         return $this->render('index', compact(['pzem004t','dht22','ds18b20']));
     }
 
-    public function actionJson(){
+    public function actionJson($sensor = null, $names = null, $last = null){
         $validSensors = ['pzem004t', 'dht22', 'ds18b20'];
-        $request  = yii::$app->request;
-        if (!$request->get('sensor'))
+
+        if (!$sensor)
             return $this->render('error', ['error' => 'please choose sensor name, by GET request']);
-        if (!in_array($request->get('sensor'), $validSensors))
+        if (!in_array($sensor, $validSensors))
             return $this->render('error', ['error' => 'invalid sensor name']);
 
        Yii::$app->response->format = Response::FORMAT_JSON;
 
-        switch($request->get('sensor')){
+       switch($sensor){
             case 'pzem004t':
                 $recordsModel = new RecordsPzem004t();
                 break;
@@ -43,16 +43,15 @@ class SensorsController extends Controller
             case 'ds18b20':
                 $recordsModel = new RecordsDs18b20();
                 break;
-        }
+       }
 
-        if($request->get('sensor') ==  'ds18b20' && !is_null($request->get('names')))
+        if($sensor == 'ds18b20' && !is_null($names))
             return $recordsModel->getAllSensorsNames();
 
-        if( !is_null($request->get('last'))){
-            return $recordsModel->getLast($request->get('serial'));
+        if($last){
+            return $recordsModel->getLast($serial);
         } else {
-            return $recordsModel->get($request->get('serial'), 31);
-
+            return $recordsModel->get($serial, 31);
         }
 
     }
