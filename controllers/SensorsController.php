@@ -7,6 +7,7 @@
  */
 
 namespace app\controllers;
+use app\models\JsonSensorsData;
 use app\models\RecordsDht22;
 use app\models\RecordsDs18b20;
 use app\models\RecordsPzem004t;
@@ -23,7 +24,7 @@ class SensorsController extends Controller
         return $this->render('index', compact(['pzem004t','dht22','ds18b20']));
     }
 
-    public function actionJson($sensor = null, $names = null, $last = null){
+    public function actionJson($sensor = null, $names = null, $serial = null,  $last = null){
         $validSensors = ['pzem004t', 'dht22', 'ds18b20'];
 
         if (!$sensor)
@@ -33,26 +34,8 @@ class SensorsController extends Controller
 
        Yii::$app->response->format = Response::FORMAT_JSON;
 
-       switch($sensor){
-            case 'pzem004t':
-                $recordsModel = new RecordsPzem004t();
-                break;
-            case 'dht22':
-                $recordsModel = new RecordsDht22();
-                break;
-            case 'ds18b20':
-                $recordsModel = new RecordsDs18b20();
-                break;
-       }
-
-        if($sensor == 'ds18b20' && !is_null($names))
-            return $recordsModel->getAllSensorsNames();
-
-        if($last){
-            return $recordsModel->getLast($serial);
-        } else {
-            return $recordsModel->get($serial, 31);
-        }
+       $jsonSensorData = new JsonSensorsData();
+       return $jsonSensorData->getData($sensor, $names, $serial, $last, $days = 31);
 
     }
 }
