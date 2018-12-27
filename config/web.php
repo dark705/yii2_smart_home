@@ -28,5 +28,8 @@ return [
             'showScriptName' => false
         ],
         'db' => require 'db.php',
+        'assetManager' =>[
+            'appendTimestamp' => true
+        ]
     ]
 ];
