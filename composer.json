@@ -5,5 +5,11 @@
         "codeception/codeception": "*",
         "yiisoft/yii2-bootstrap": "^2.0",
         "miloschuman/yii2-highcharts-widget": "^6.0"
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
