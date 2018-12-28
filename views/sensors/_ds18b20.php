@@ -53,13 +53,22 @@ use yii\web\View;
         "
             var chartDs18b20__" . md5($sensor['serial']) . " = $('#ds18b20_" . $sensor['serial'] . "').highcharts();
             chartDs18b20__" . md5($sensor['serial']) . ".showLoading();
-            $.getJSON('sensors/json?sensor=ds18b20&serial=" . $sensor['serial']. "', function (data) {
-                var temperature = [];
-                $.each(data, function(index, value){
-					temperature.push([value.datetime * 1000, value.temperature]);
-                });    
-                chartDs18b20__" . md5($sensor['serial']) . ".series[0].setData(temperature);
-                chartDs18b20__" . md5($sensor['serial']) . ".hideLoading();
+            $.ajax( 
+                 {  
+                    method: 'POST',
+                    url: 'sensors',
+                    data: {
+                        sensor: 'ds18b20',
+                        serial: '" . $sensor['serial'] . "'
+                    },
+                    success: function(data){
+                        var temperature = [];
+                        $.each(data, function(index, value){
+                            temperature.push([value.datetime * 1000, value.temperature]);
+                        });    
+                        chartDs18b20__" . md5($sensor['serial']) . ".series[0].setData(temperature);
+                        chartDs18b20__" . md5($sensor['serial']) . ".hideLoading();
+                    }
             });
         ",
         View::POS_READY

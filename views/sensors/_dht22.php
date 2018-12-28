@@ -89,16 +89,24 @@ use yii\web\View;
         "
             var chartDht22 = $('#dht22').highcharts();
             chartDht22.showLoading();
-            $.getJSON('sensors/json?sensor=dht22', function (data) {
-			var temperature = [], humidity = [];
-			$.each(data, function(index, value){
-				temperature.push([value.datetime * 1000, value.temperature]);
-				humidity.push([value.datetime * 1000, value.humidity]);	
-			});
-			chartDht22.series[0].setData(temperature, false);
-			chartDht22.series[1].setData(humidity, true);
-			chartDht22.hideLoading();
-		});
+            $.ajax( 
+            {  
+                method: 'POST',
+                url: 'sensors',
+                data: {
+                    sensor: 'dht22'
+                },
+                success: function(data){
+                var temperature = [], humidity = [];
+                	$.each(data, function(index, value){
+                        temperature.push([value.datetime * 1000, value.temperature]);
+                        humidity.push([value.datetime * 1000, value.humidity]);	
+                    });
+                    chartDht22.series[0].setData(temperature, false);
+                    chartDht22.series[1].setData(humidity, true);
+                    chartDht22.hideLoading();
+                }
+            });
         ",
         View::POS_READY
     );

@@ -108,11 +108,10 @@ use yii\web\View;
         "
             var chartPzem004t = $('#pzem004t').highcharts();
             chartPzem004t.showLoading();
-            
              $.ajax( 
              {  
                 method: 'POST',
-                url: 'sensors/json',
+                url: 'sensors',
                 data: {
                     sensor: 'pzem004t'
                 },

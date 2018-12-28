@@ -19,35 +19,26 @@ class SensorsController extends Controller
 {
     public function actionIndex()
     {
-        $ds18b20 = new RecordsDs18b20();
-        $dht22 = new RecordsDht22();
-        $pzem004t = new RecordsPzem004t();
-        return $this->render('index', compact(['pzem004t', 'dht22', 'ds18b20']));
-    }
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
 
-    public function actionJson($sensor = null, $names = null, $serial = null, $last = null)
-    {
-
-        if (Yii::$app->request->isPost) {
             $request = Yii::$app->request;
-            $sensor = $request->post('sensor');
-            $names = $request->post('names');
-            $serial = $request->post('serial');
-            $last = $request->post('last');
+            $validSensors = ['pzem004t', 'dht22', 'ds18b20'];
+
+
+            if (!in_array($request->post('sensor'), $validSensors))
+                return 'invalid sensor name';
+
+            $jsonSensorData = new JsonSensorsData();
+            return $jsonSensorData->getData($request, $days = 31);
+
         }
-
-        $validSensors = ['pzem004t', 'dht22', 'ds18b20'];
-
-        if (!$sensor)
-            return $this->render('error', ['error' => 'please choose sensor name, by GET request']);
-        if (!in_array($sensor, $validSensors))
-            return $this->render('error', ['error' => 'invalid sensor name']);
-
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $jsonSensorData = new JsonSensorsData();
-        return $jsonSensorData->getData($sensor, $names, $serial, $last, $days = 31);
-
+        if (Yii::$app->request->isGet){
+            $ds18b20 = new RecordsDs18b20();
+            $dht22 = new RecordsDht22();
+            $pzem004t = new RecordsPzem004t();
+            return $this->render('index', compact(['pzem004t', 'dht22', 'ds18b20']));
+        }
     }
 
 }
