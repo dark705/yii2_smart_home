@@ -89,8 +89,7 @@ use yii\web\View;
         "
             var chartDht22 = $('#dht22').highcharts();
             chartDht22.showLoading();
-            $.ajax( 
-            {  
+            $.ajax({  
                 method: 'POST',
                 url: 'sensors',
                 data: {
