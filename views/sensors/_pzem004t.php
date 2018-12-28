@@ -108,19 +108,27 @@ use yii\web\View;
         "
             var chartPzem004t = $('#pzem004t').highcharts();
             chartPzem004t.showLoading();
-
-             $.getJSON('sensors/json?sensor=pzem004t', function (data) {
-                var voltage = [], current = [], active = [];
-                $.each(data, function(index, value){
-					voltage.push([value.datetime * 1000, value.voltage]);
-					current.push([value.datetime * 1000, value.current]);
-					active.push([value.datetime * 1000, value.active]);
-                });
-                chartPzem004t.series[0].setData(voltage, false);
-                chartPzem004t.series[1].setData(current, false);
-                chartPzem004t.series[2].setData(active, true);
-                chartPzem004t.hideLoading();
-           });
+            
+             $.ajax( 
+             {  
+                method: 'POST',
+                url: 'sensors/json',
+                data: {
+                    sensor: 'pzem004t'
+                },
+                success: function(data){
+                    var voltage = [], current = [], active = [];
+                    $.each(data, function(index, value){
+                        voltage.push([value.datetime * 1000, value.voltage]);
+                        current.push([value.datetime * 1000, value.current]);
+                        active.push([value.datetime * 1000, value.active]);
+                    });
+                    chartPzem004t.series[0].setData(voltage, false);
+                    chartPzem004t.series[1].setData(current, false);
+                    chartPzem004t.series[2].setData(active, true);
+                    chartPzem004t.hideLoading();    
+                }
+             });
         ",
         View::POS_READY
     );

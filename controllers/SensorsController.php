@@ -17,14 +17,25 @@ use yii\web\Response;
 
 class SensorsController extends Controller
 {
-    public function actionIndex(){
+    public function actionIndex()
+    {
         $ds18b20 = new RecordsDs18b20();
         $dht22 = new RecordsDht22();
         $pzem004t = new RecordsPzem004t();
-        return $this->render('index', compact(['pzem004t','dht22','ds18b20']));
+        return $this->render('index', compact(['pzem004t', 'dht22', 'ds18b20']));
     }
 
-    public function actionJson($sensor = null, $names = null, $serial = null,  $last = null){
+    public function actionJson($sensor = null, $names = null, $serial = null, $last = null)
+    {
+
+        if (Yii::$app->request->isPost) {
+            $request = Yii::$app->request;
+            $sensor = $request->post('sensor');
+            $names = $request->post('names');
+            $serial = $request->post('serial');
+            $last = $request->post('last');
+        }
+
         $validSensors = ['pzem004t', 'dht22', 'ds18b20'];
 
         if (!$sensor)
@@ -32,10 +43,11 @@ class SensorsController extends Controller
         if (!in_array($sensor, $validSensors))
             return $this->render('error', ['error' => 'invalid sensor name']);
 
-       Yii::$app->response->format = Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
-       $jsonSensorData = new JsonSensorsData();
-       return $jsonSensorData->getData($sensor, $names, $serial, $last, $days = 31);
+        $jsonSensorData = new JsonSensorsData();
+        return $jsonSensorData->getData($sensor, $names, $serial, $last, $days = 31);
 
     }
+
 }

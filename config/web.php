@@ -21,7 +21,8 @@ return [
     ],
     'components' => [
         'request' => [
-            'cookieValidationKey' => 'somesecret ssssssstring'
+            'cookieValidationKey' => 'somesecret ssssssstring',
+            'enableCsrfValidation' => false,
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
