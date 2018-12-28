@@ -24,7 +24,6 @@ $this->registerJs(
 	function updateLastWeather(){
          $.ajax({  
             method: 'POST',
-            url: 'sensors',
             data: {
                 sensor: 'dht22',
                 last: true

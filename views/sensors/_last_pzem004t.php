@@ -25,7 +25,6 @@ $this->registerJs(
     function updateLastElectro(){
          $.ajax({  
             method: 'POST',
-            url: 'sensors',
             data: {
                 sensor: 'pzem004t',
                 last: true

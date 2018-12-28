@@ -13,7 +13,6 @@ use yii\web\View;
     echo Highstock::widget([
         'id' => 'pzem004t',
         'scripts' => [
-            'lang/ru',
             'modules/exporting',
             'themes/grid-light',
 
@@ -110,7 +109,6 @@ use yii\web\View;
             chartPzem004t.showLoading();
              $.ajax({  
                 method: 'POST',
-                url: 'sensors',
                 data: {
                     sensor: 'pzem004t'
                 },

@@ -91,7 +91,6 @@ use yii\web\View;
             chartDht22.showLoading();
             $.ajax({  
                 method: 'POST',
-                url: 'sensors',
                 data: {
                     sensor: 'dht22'
                 },

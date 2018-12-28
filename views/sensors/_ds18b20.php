@@ -55,7 +55,6 @@ use yii\web\View;
             chartDs18b20__" . md5($sensor['serial']) . ".showLoading();
             $.ajax({  
                 method: 'POST',
-                url: 'sensors',
                 data: {
                     sensor: 'ds18b20',
                     serial: '" . $sensor['serial'] . "'

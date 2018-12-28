@@ -29,7 +29,6 @@ $this->registerJs(
 			var serial = $(this).attr('id');
 		    $.ajax({  
                 method: 'POST',
-                url: 'sensors',
                 data: {
                     sensor: 'ds18b20',
                     serial: serial,
