@@ -22,24 +22,34 @@ use yii\web\View;
 $this->registerJs(
     "
 	function updateLastWeather(){
-		$.getJSON('sensors/json?sensor=dht22&last', function(data){
-		    data = data[0];
+	         $.ajax( 
+             {  
+                method: 'POST',
+                url: 'sensors',
+                data: {
+                    sensor: 'dht22',
+                    last: true
+                },
+                success: function(data){
+                    data = data[0];
 		   
-		    //update last section
-			var d = new Date((data.datetime - 3*60*60) * 1000);
-			$('#last__weather__time span').text(d.toString('yyyy-MM-dd HH:mm:ss'));
-			$('#last__weather__temp span').text(data.temperature);
-			$('#last__weather__humidity span').text(data.humidity);
-			$('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500);
-			
-			//update graph
-			var chartDht22 = $('#dht22').highcharts();
-			var temperature = [data.datetime * 1000, data.temperature];
-			var humidity = [data.datetime * 1000, data.humidity];	
-			chartDht22.series[0].addPoint(temperature, false, true);
-			chartDht22.series[1].addPoint(humidity, false, true);
-			chartDht22.redraw();
-		});
+                    //update last section
+                    var d = new Date((data.datetime - 3*60*60) * 1000);
+                    $('#last__weather__time span').text(d.toString('yyyy-MM-dd HH:mm:ss'));
+                    $('#last__weather__temp span').text(data.temperature);
+                    $('#last__weather__humidity span').text(data.humidity);
+                    $('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500);
+                    
+                    //update graph
+                    var chartDht22 = $('#dht22').highcharts();
+                    var temperature = [data.datetime * 1000, data.temperature];
+                    var humidity = [data.datetime * 1000, data.humidity];	
+                    chartDht22.series[0].addPoint(temperature, false, true);
+                    chartDht22.series[1].addPoint(humidity, false, true);
+                    chartDht22.redraw();
+                    
+                }
+             });
 	}
 	
 	setInterval(function(){

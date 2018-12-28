@@ -17,7 +17,6 @@ class RecordsDs18b20 implements RecordsInterface
         foreach ($records as $key => $record){
             $convertedRecord = [
                 'datetime' => strtotime($record['datetime']),
-                'serial' => (float)$record['serial'],
                 'temperature' => (float)$record['temperature'],
             ];
             $records[$key] = $convertedRecord;
@@ -47,7 +46,7 @@ class RecordsDs18b20 implements RecordsInterface
             return false;
 
         $records = (new Query)
-            ->select(['datetime', 'serial', 'temperature'])
+            ->select(['datetime', 'temperature'])
             ->from('ds18b20')
             ->where(['serial' => $serial])
             ->orderBy('datetime DESC')
@@ -61,7 +60,7 @@ class RecordsDs18b20 implements RecordsInterface
             return false;
 
         $records = (new Query())
-            ->select(['datetime', 'serial', 'temperature'])
+            ->select(['datetime', 'temperature'])
             ->from('ds18b20')
             ->where(['serial' => $serial])
             ->andWhere('datetime > NOW() - INTERVAL ' . $days . ' DAY')

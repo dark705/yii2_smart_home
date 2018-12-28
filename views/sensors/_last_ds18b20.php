@@ -25,23 +25,38 @@ use yii\web\View;
 $this->registerJs(
     "
 	function updateLastDs18b20(){
+
+	
+	
+	
+	
 		$('.last__ds18b20').each(function(index, thisEl){
 			var serial = $(this).attr('id');
-			$.getJSON('sensors/json?sensor=ds18b20&serial=' + serial +'&last', function(data){
-                data = data[0];
+		    $.ajax( 
+             {  
+                    method: 'POST',
+                    url: 'sensors',
+                    data: {
+                        sensor: 'ds18b20',
+                        serial: serial,
+                        last: true
+                    },
+                    success: function(data){
+                        data = data[0];
                 
-                //update last section
-				var d = new Date((data.datetime - 3*60*60) * 1000);
-				$(thisEl).find('.last__ds18b20__time span').text(d.toString('yyyy-MM-dd HH:mm:ss'));
-				$(thisEl).find('.last__ds18b20__temp span').text(data.temperature);
-				$('#' + serial).animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
-				
-                //update graph
-                var chartDs18b20__item = $('#ds18b20_' + serial).highcharts();
-                var temperature = [data.datetime * 1000, data.temperature]; 
-                chartDs18b20__item.series[0].addPoint(temperature, false, true);
-                chartDs18b20__item.redraw();
-			});
+                        //update last section
+                        var d = new Date((data.datetime - 3*60*60) * 1000);
+                        $(thisEl).find('.last__ds18b20__time span').text(d.toString('yyyy-MM-dd HH:mm:ss'));
+                        $(thisEl).find('.last__ds18b20__temp span').text(data.temperature);
+                        $('#' + serial).animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500)
+                        
+                        //update graph
+                        var chartDs18b20__item = $('#ds18b20_' + serial).highcharts();
+                        var temperature = [data.datetime * 1000, data.temperature]; 
+                        chartDs18b20__item.series[0].addPoint(temperature, false, true);
+                        chartDs18b20__item.redraw();
+                    }
+             });
 		});
 	}
 	setInterval(function(){
