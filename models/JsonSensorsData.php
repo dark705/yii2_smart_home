@@ -21,34 +21,21 @@ class JsonSensorsData extends Model
         return [
             ['validSensors', 'validateSensorName']
         ];
-
     }
 
 
     public function validateSensorName(){
-        if(!in_array($this->request->post('sensor'), $this->validSensors))
-            $this->addError('sensor',"Sensor name: {$this->request->post('sensor')} is not valid");
+        if(!array_key_exists($this->request->post('sensor'), $this->validSensors))
+            $this->addError('error',"Sensor name: {$this->request->post('sensor')} is not valid");
     }
 
     public function getData($days = 10){
-
-        switch($this->request->post('sensor')){
-            case 'pzem004t':
-                $recordsModel = new RecordsPzem004t();
-                break;
-            case 'dht22':
-                $recordsModel = new RecordsDht22();
-                break;
-            case 'ds18b20':
-                $recordsModel = new RecordsDs18b20();
-                break;
-            default:
-                return false;
-        }
+        $sensor = $this->request->post('sensor');
+        $class = __NAMESPACE__ . '\\'.  $this->validSensors[$sensor];
+        $recordsModel = new $class();
 
         if($this->request->post('sensor') == 'ds18b20' && $this->request->post('names'))
             return $recordsModel->getAllSensorsNames();
-
         if($this->request->post('last')){
             return $recordsModel->getLast($this->request->post('serial'));
         } else {

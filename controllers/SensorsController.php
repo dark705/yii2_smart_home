@@ -22,17 +22,19 @@ class SensorsController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
 
             $jsonSensorData = new JsonSensorsData();
-            $jsonSensorData->validSensors = ['pzem004t', 'dht22', 'ds18b20'];
+            $jsonSensorData->validSensors = [
+                'pzem004t' => 'RecordsPzem004t',
+                'dht22' => 'RecordsDht22',
+                'ds18b20' => 'RecordsDs18b20'
+            ];
             $jsonSensorData->request = Yii::$app->request;
 
             if($jsonSensorData->validate()){
+                //echo Html::csrfMetaTags();
                 return $jsonSensorData->getData($days = 31);
             } else {
                 return $jsonSensorData->errors;
             }
-
-
-
         }
 
         if (Yii::$app->request->isGet){
