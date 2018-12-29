@@ -92,7 +92,8 @@ use yii\web\View;
             $.ajax({  
                 method: 'POST',
                 data: {
-                    sensor: 'dht22'
+                    sensor: 'dht22',
+                    $crfAjaxToken
                 },
                 success: function(data){
                 var temperature = [], humidity = [];

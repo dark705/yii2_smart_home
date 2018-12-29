@@ -38,7 +38,6 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-
     <?=$content;?>
     <?php $this->endBody(); ?>
     </body>

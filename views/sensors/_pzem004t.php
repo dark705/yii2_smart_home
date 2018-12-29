@@ -8,6 +8,7 @@
 use miloschuman\highcharts\Highstock;
 use yii\web\View;
 
+
 ?>
     <?php
     echo Highstock::widget([
@@ -103,6 +104,8 @@ use yii\web\View;
                 ]
         ]
     ]);
+
+
     $this->registerJs(
         "
             var chartPzem004t = $('#pzem004t').highcharts();
@@ -110,7 +113,8 @@ use yii\web\View;
              $.ajax({  
                 method: 'POST',
                 data: {
-                    sensor: 'pzem004t'
+                    sensor: 'pzem004t',
+                    $crfAjaxToken
                 },
                 success: function(data){
                     var voltage = [], current = [], active = [];

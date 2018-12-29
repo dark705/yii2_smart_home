@@ -57,7 +57,8 @@ use yii\web\View;
                 method: 'POST',
                 data: {
                     sensor: 'ds18b20',
-                    serial: '" . $sensor['serial'] . "'
+                    serial: '" . $sensor['serial'] . "',
+                    $crfAjaxToken
                 },
                 success: function(data){
                     var temperature = [];

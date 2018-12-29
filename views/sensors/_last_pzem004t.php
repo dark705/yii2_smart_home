@@ -27,7 +27,8 @@ $this->registerJs(
             method: 'POST',
             data: {
                 sensor: 'pzem004t',
-                last: true
+                last: true,
+                $crfAjaxToken
             },
             success: function(data){
                 data = data[0];

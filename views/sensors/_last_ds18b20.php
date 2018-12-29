@@ -32,7 +32,8 @@ $this->registerJs(
                 data: {
                     sensor: 'ds18b20',
                     serial: serial,
-                    last: true
+                    last: true,
+                    $crfAjaxToken
                 },
                 success: function(data){
                     data = data[0];

@@ -30,7 +30,6 @@ class SensorsController extends Controller
             $jsonSensorData->request = Yii::$app->request;
 
             if($jsonSensorData->validate()){
-                //echo Html::csrfMetaTags();
                 return $jsonSensorData->getData($days = 31);
             } else {
                 return $jsonSensorData->errors;

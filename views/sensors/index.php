@@ -21,24 +21,26 @@
         ]
     ];
     $intervalUpdateLast = 60;
+    $crfAjaxToken = Yii::$app->request->csrfParam . ': \'' . Yii::$app->request->csrfToken . '\'';
+
 ?>
 
 <div class="container-fluid .overflow-hide">
     <div id="lasts">
         <!-- start electro last section -->
         <div class="last">
-            <?=$this->render('_last_pzem004t', compact(['pzem004t', 'intervalUpdateLast']));?>
+            <?=$this->render('_last_pzem004t', compact(['pzem004t', 'intervalUpdateLast', 'crfAjaxToken']));?>
         </div>
         <!-- end -->
         <!-- start weather last section -->
         <div class="last">
-            <?=$this->render('_last_dht22', compact(['dht22', 'intervalUpdateLast']));?>
+            <?=$this->render('_last_dht22', compact(['dht22', 'intervalUpdateLast', 'crfAjaxToken']));?>
         </div>
         <!-- end -->
         <!-- start ds18b20 last section -->
         <?php foreach($ds18b20->getAllSensorsNames() as $sensor):?>
         <div class="last">
-            <?=$this->render('_last_ds18b20', compact(['ds18b20', 'sensor', 'intervalUpdateLast']));?>
+            <?=$this->render('_last_ds18b20', compact(['ds18b20', 'sensor', 'intervalUpdateLast', 'crfAjaxToken']));?>
         </div>
         <?php endforeach;?>
         <!-- end -->
@@ -47,18 +49,18 @@
 
     <div class="chart">
         <a name="chart__electro"></a>
-        <?=$this->render('_pzem004t', compact('rangeSelectorObj'));?>
+        <?=$this->render('_pzem004t', compact(['rangeSelectorObj', 'crfAjaxToken']));?>
     </div>
 
     <div class="chart">
         <a name="chart__weather"></a>
-        <?=$this->render('_dht22',  compact('rangeSelectorObj'));?>
+        <?=$this->render('_dht22',  compact(['rangeSelectorObj', 'crfAjaxToken']));?>
     </div>
 
     <?foreach($ds18b20->getAllSensorsNames() as $sensor):?>
         <div class="chart">
             <a name="chart__<?=$sensor['serial']?>"></a>
-            <?=$this->render('_ds18b20',  compact(['rangeSelectorObj','sensor']));?>
+            <?=$this->render('_ds18b20',  compact(['rangeSelectorObj', 'sensor', 'crfAjaxToken']));?>
         </div>
     <?endforeach;?>
 </div>
