@@ -9,13 +9,30 @@
 namespace app\models;
 
 
-class JsonSensorsData
+use yii\base\Model;
+
+class JsonSensorsData extends Model
 {
 
+    public $validSensors;
+    public $request;
 
-    public function getData($request, $days = 10){
+    public function rules(){
+        return [
+            ['validSensors', 'validateSensorName']
+        ];
 
-        switch($request->post('sensor')){
+    }
+
+
+    public function validateSensorName(){
+        if(!in_array($this->request->post('sensor'), $this->validSensors))
+            $this->addError('sensor',"Sensor name: {$this->request->post('sensor')} is not valid");
+    }
+
+    public function getData($days = 10){
+
+        switch($this->request->post('sensor')){
             case 'pzem004t':
                 $recordsModel = new RecordsPzem004t();
                 break;
@@ -29,13 +46,13 @@ class JsonSensorsData
                 return false;
         }
 
-        if($request->post('sensor') == 'ds18b20' && $request->post('names'))
+        if($this->request->post('sensor') == 'ds18b20' && $this->request->post('names'))
             return $recordsModel->getAllSensorsNames();
 
-        if($request->post('last')){
-            return $recordsModel->getLast($request->post('serial'));
+        if($this->request->post('last')){
+            return $recordsModel->getLast($this->request->post('serial'));
         } else {
-            return $recordsModel->get($request->post('serial'), $days);
+            return $recordsModel->get($this->request->post('serial'), $days);
         }
 
         return false;
