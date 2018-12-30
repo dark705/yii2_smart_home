@@ -13,6 +13,7 @@ class RecordsPzem004t implements RecordsInterface
 {
 
     private static function convertTypes($records){
+        \Yii::beginProfile('convert_types_pzem', __METHOD__);
         foreach ($records as $key => $record){
             $convertedRecord = [
                 'datetime' => strtotime($record['datetime']),
@@ -22,6 +23,7 @@ class RecordsPzem004t implements RecordsInterface
                 ];
             $records[$key] = $convertedRecord;
         }
+        \Yii::endProfile('convert_types_pzem');
         return $records;
     }
 
