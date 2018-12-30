@@ -27,10 +27,11 @@ class SensorsController extends Controller
                 'dht22' => 'RecordsDht22',
                 'ds18b20' => 'RecordsDs18b20'
             ];
+            $jsonSensorData->days = 31;
             $jsonSensorData->request = Yii::$app->request;
 
             if($jsonSensorData->validate()){
-                return $jsonSensorData->getData($days = 31);
+                return $jsonSensorData->data;
             } else {
                 return $jsonSensorData->errors;
             }
