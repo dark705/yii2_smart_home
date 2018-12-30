@@ -21,14 +21,15 @@ class SensorsController extends Controller
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-            $jsonSensorData = new JsonSensorsData();
-            $jsonSensorData->validSensors = [
-                'pzem004t' => 'RecordsPzem004t',
-                'dht22' => 'RecordsDht22',
-                'ds18b20' => 'RecordsDs18b20'
-            ];
-            $jsonSensorData->days = 31;
-            $jsonSensorData->request = Yii::$app->request;
+            $jsonSensorData = new JsonSensorsData([
+                'validSensors' => [
+                    'pzem004t' => 'RecordsPzem004t',
+                    'dht22' => 'RecordsDht22',
+                    'ds18b20' => 'RecordsDs18b20'
+                ],
+                'days' => 31,
+                'request' => Yii::$app->request
+            ]);
 
             if($jsonSensorData->validate()){
                 return $jsonSensorData->data;
