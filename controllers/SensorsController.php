@@ -20,8 +20,8 @@ class SensorsController extends Controller
     public function actionIndex(){
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-
-            $jsonSensorData = new JsonSensorsData([
+            $jsonSensorData = Yii::createObject([
+                'class' => JsonSensorsData::class,
                 'validSensors' => [
                     'pzem004t' => 'RecordsPzem004t',
                     'dht22' => 'RecordsDht22',
