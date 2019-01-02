@@ -9,5 +9,5 @@ namespace app\models;
 
 interface RecordsInterface{
     public function getLast($serial);
-    public function get($serial, $days);
+    public function get($serial);
 }

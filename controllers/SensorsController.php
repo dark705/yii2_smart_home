@@ -39,9 +39,21 @@ class SensorsController extends Controller
         }
 
         if (Yii::$app->request->isGet){
-            $ds18b20 = new RecordsDs18b20();
-            $dht22 = new RecordsDht22();
-            $pzem004t = new RecordsPzem004t();
+            $ds18b20 = Yii::createObject([
+                'class' => RecordsDs18b20::class,
+                'days' => 31
+            ]);
+
+            $dht22 = Yii::createObject([
+                'class' => RecordsDht22::class,
+                'days' => 31
+            ]);
+            $pzem004t = Yii::createObject([
+                'class' => RecordsPzem004t::class,
+                'days' => 31
+            ]);
+
+
             return $this->render('index', compact(['pzem004t', 'dht22', 'ds18b20']));
         }
     }

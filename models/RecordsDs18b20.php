@@ -7,11 +7,13 @@
  */
 
 namespace app\models;
+use yii\base\Model;
 use yii\db\Query;
 
-class RecordsDs18b20 implements RecordsInterface
+class RecordsDs18b20 extends Model implements RecordsInterface
 {
     private $allSensorsNames;
+    public $days = 10;
 
     private static function convertTypes($records){
         foreach ($records as $key => $record){
@@ -29,6 +31,7 @@ class RecordsDs18b20 implements RecordsInterface
             $subQuery = (new Query())
                 ->select('serial')
                 ->from('ds18b20')
+                ->where('datetime > NOW() - INTERVAL ' . $this->days . ' DAY')
                 ->distinct();
 
             $this->allSensorsNames =  (new Query())->select('distinct.serial, ds18b20_names.name')
@@ -55,7 +58,7 @@ class RecordsDs18b20 implements RecordsInterface
         return static::convertTypes($records);
     }
 
-    public function get($serial, $days = 10){
+    public function get($serial){
         if(!$this->validate($serial))
             return false;
 
@@ -63,12 +66,12 @@ class RecordsDs18b20 implements RecordsInterface
             ->select(['datetime', 'temperature'])
             ->from('ds18b20')
             ->where(['serial' => $serial])
-            ->andWhere('datetime > NOW() - INTERVAL ' . $days . ' DAY')
+            ->andWhere('datetime > NOW() - INTERVAL ' . $this->days . ' DAY')
             ->all();
         return static::convertTypes($records);
     }
 
-    private function validate($serial){
+    public function validate($serial){
         foreach($this->getAllSensorsNames() as $record){
             if ($record['serial'] == $serial)
                 return  true;

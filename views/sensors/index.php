@@ -26,6 +26,7 @@
 ?>
 
 <div class="container-fluid .overflow-hide">
+    <!-- start last section -->
     <div id="lasts">
         <!-- start electro last section -->
         <div class="last">
@@ -46,7 +47,9 @@
         <!-- end -->
         <div class="clear"></div>
     </div>
+    <!-- end -->
 
+    <!-- start charts section -->
     <div class="chart">
         <a name="chart__electro"></a>
         <?=$this->render('_pzem004t', compact(['rangeSelectorObj', 'crfAjaxToken']));?>
@@ -63,6 +66,7 @@
             <?=$this->render('_ds18b20',  compact(['rangeSelectorObj', 'sensor', 'crfAjaxToken']));?>
         </div>
     <?endforeach;?>
+    <!-- end -->
 </div>
 
 

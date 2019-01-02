@@ -7,10 +7,12 @@
  */
 
 namespace app\models;
+use yii\base\Model;
 use yii\db\Query;
 
-class RecordsPzem004t implements RecordsInterface
+class RecordsPzem004t extends Model implements RecordsInterface
 {
+    public $days = 10;
 
     private static function convertTypes($records){
         \Yii::beginProfile('convert_types_pzem', __METHOD__);
@@ -37,11 +39,11 @@ class RecordsPzem004t implements RecordsInterface
         return static::convertTypes($records);
     }
 
-    public function get($serial = null, $days = 10){
+    public function get($serial = null){
         $records = (new Query())
             ->select(['datetime', 'voltage', 'current', 'active'])
             ->from('pzem004t')
-            ->where('datetime > NOW() - INTERVAL ' . $days . ' DAY')
+            ->where('datetime > NOW() - INTERVAL ' . $this->days . ' DAY')
             ->all();
         return static::convertTypes($records);
     }

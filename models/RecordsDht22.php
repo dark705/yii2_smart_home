@@ -7,10 +7,13 @@
  */
 
 namespace app\models;
+use yii\base\Model;
 use yii\db\Query;
 
-class RecordsDht22 implements RecordsInterface
+class RecordsDht22 extends Model implements RecordsInterface
 {
+    public $days = 10;
+
     private static function convertTypes($records){
         foreach ($records as $key => $record){
             $convertedRecord = [
@@ -33,11 +36,11 @@ class RecordsDht22 implements RecordsInterface
         return static::convertTypes($records);
     }
 
-    public function get($serial = null, $days = 10){
+    public function get($serial = null){
         $records = (new Query())
             ->select(['datetime', 'temperature', 'humidity'])
             ->from('dht22')
-            ->where('datetime > NOW() - INTERVAL ' . $days . ' DAY')
+            ->where('datetime > NOW() - INTERVAL ' . $this->days . ' DAY')
             ->all();
         return static::convertTypes($records);
     }
