@@ -6,10 +6,10 @@
 
 .last {
 	display:inline-block;
-	vertical-align: middle;
+	vertical-align: top;
 	margin:1em;
 	border:1px solid #ddd;
-	height: 10em;
+	height: 12em;
 }
 
 .last h3{
@@ -30,7 +30,6 @@
 	clear:both;
 }
 .ontime {
-
 	padding-bottom:0.6em;
 	font-size:0.8em;
 }
@@ -38,7 +37,7 @@
 .itemlink {
 	text-align:left;
 	display: block;
-	padding:2em;
+	padding:1em 2em;
 	color: #000;
 	text-decoration:none;
 }
