@@ -9,6 +9,7 @@
 namespace app\models;
 
 
+use Yii;
 use yii\base\Model;
 
 class JsonSensorsData extends Model
@@ -33,7 +34,10 @@ class JsonSensorsData extends Model
     public function getData(){
         $sensor = $this->request->post('sensor');
         $class = __NAMESPACE__ . '\\'.  $this->validSensors[$sensor];
-        $recordsModel = new $class(['days' => $this->days]);
+        $recordsModel = Yii::createObject([
+            'class' => $class,
+            'days' => $this->days
+        ]);
 
         if($this->request->post('sensor') == 'ds18b20' && $this->request->post('names'))
             return $recordsModel->getAllSensorsNames();
