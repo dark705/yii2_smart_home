@@ -45,7 +45,7 @@ class RecordsDs18b20 extends Model implements RecordsInterface
     }
 
     public function getLast($serial){
-        if(!$this->validate($serial))
+        if(!$this->check($serial))
             return false;
 
         $records = (new Query)
@@ -59,7 +59,7 @@ class RecordsDs18b20 extends Model implements RecordsInterface
     }
 
     public function get($serial){
-        if(!$this->validate($serial))
+        if(!$this->check($serial))
             return false;
 
         $records = (new Query())
@@ -71,7 +71,7 @@ class RecordsDs18b20 extends Model implements RecordsInterface
         return static::convertTypes($records);
     }
 
-    public function validate($serial){
+    public function check($serial){
         foreach($this->getAllSensorsNames() as $record){
             if ($record['serial'] == $serial)
                 return  true;
