@@ -60,10 +60,11 @@ use yii\web\View;
                     serial: '" . $sensor['serial'] . "',
                     $crfAjaxToken
                 },
-                success: function(data){
+                success: function(response){
                     var temperature = [];
-                    $.each(data, function(index, value){
-                        temperature.push([value.datetime * 1000, value.temperature]);
+                    var index = response.types;
+                    $.each(response.data, function(i, data){
+                        temperature.push([data[index.datetime] * 1000, data[index.temperature]]);
                     });    
                     chartDs18b20__" . md5($sensor['serial']) . ".series[0].setData(temperature);
                     chartDs18b20__" . md5($sensor['serial']) . ".hideLoading();

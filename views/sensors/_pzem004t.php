@@ -116,12 +116,13 @@ use yii\web\View;
                     sensor: 'pzem004t',
                     $crfAjaxToken
                 },
-                success: function(data){
+                success: function(response){
                     var voltage = [], current = [], active = [];
-                    $.each(data, function(index, value){
-                        voltage.push([value.datetime * 1000, value.voltage]);
-                        current.push([value.datetime * 1000, value.current]);
-                        active.push([value.datetime * 1000, value.active]);
+                    var index = response.types; 
+                    $.each(response.data, function(i, data){
+                        voltage.push([data[index.datetime] * 1000, data[index.voltage]]);
+                        current.push([data[index.datetime] * 1000, data[index.current]]);
+                        active.push([data[index.datetime] * 1000, data[index.active]]);
                     });
                     chartPzem004t.series[0].setData(voltage, false);
                     chartPzem004t.series[1].setData(current, false);

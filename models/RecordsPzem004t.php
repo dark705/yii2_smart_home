@@ -15,16 +15,26 @@ class RecordsPzem004t extends Model implements RecordsInterface
     public $days = 10;
 
     private static function convertTypes($records){
+        $types = [];
+        $keys = array_keys($records[0]);
+        foreach ($keys as $index => $key){
+            $types[$key] = $index;
+        }
+
         foreach ($records as $key => $record){
             $convertedRecord = [
-                'datetime' => strtotime($record['datetime']),
-                'voltage' => (float)$record['voltage'],
-                'current' => (float)$record['current'],
-                'active' => (float)$record['active']
+                strtotime($record['datetime']),
+                (float)$record['voltage'],
+                (float)$record['current'],
+                (float)$record['active']
                 ];
             $records[$key] = $convertedRecord;
         }
-        return $records;
+
+        return [
+            'types' => $types,
+            'data' => $records
+        ];
     }
 
     public function getLast($serial = null){

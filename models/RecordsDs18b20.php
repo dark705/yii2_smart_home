@@ -16,14 +16,23 @@ class RecordsDs18b20 extends Model implements RecordsInterface
     public $days = 10;
 
     private static function convertTypes($records){
+        $types = [];
+        $keys = array_keys($records[0]);
+        foreach ($keys as $index => $key){
+            $types[$key] = $index;
+        }
+
         foreach ($records as $key => $record){
             $convertedRecord = [
-                'datetime' => strtotime($record['datetime']),
-                'temperature' => (float)$record['temperature'],
+                strtotime($record['datetime']),
+                (float)$record['temperature'],
             ];
             $records[$key] = $convertedRecord;
         }
-        return $records;
+        return [
+            'types' => $types,
+            'data' => $records
+        ];
     }
 
     public function getAllSensorsNames(){

@@ -12,10 +12,14 @@ use yii\web\View;
 <a class="itemlink" href="#chart__weather">
     <div id="last__weather" class="item ">
         <h3>Погода:</h3>
-        <?php $lastW = $dht22->getLast()[0];?>
-        <p id="last__weather__time" class="ontime">(показания на: <span><?=gmdate("Y-m-d H:i:s", $lastW['datetime'])?></span>)</p>
-        <p id="last__weather__temp">Температура: <span><?=$lastW['temperature']?></span></p>
-        <p id="last__weather__humidity">Влажность: <span><?=$lastW['humidity']?></span></p>
+        <?php
+        $last = $dht22->getLast();
+        $index = $last['types'];
+        $data = $last['data'][0];
+        ?>
+        <p id="last__weather__time" class="ontime">(показания на: <span><?=gmdate("Y-m-d H:i:s", $data[$index['datetime']])?></span>)</p>
+        <p id="last__weather__temp">Температура: <span><?=$data[$index['temperature']]?></span></p>
+        <p id="last__weather__humidity">Влажность: <span><?=$data[$index['humidity']]?></span></p>
     </div>
 </a>
 <?php
@@ -29,20 +33,21 @@ $this->registerJs(
                 last: true,
                 $crfAjaxToken
             },
-            success: function(data){
-                data = data[0];
-       
+            success: function(response){
+                var data = response.data[0];
+                var index = response.types;
+                   
                 //update last section
-                var d = new Date((data.datetime - 3*60*60) * 1000);
+                var d = new Date((data[index.datetime] - 3*60*60) * 1000);
                 $('#last__weather__time span').text(d.toString('yyyy-MM-dd HH:mm:ss'));
-                $('#last__weather__temp span').text(data.temperature);
-                $('#last__weather__humidity span').text(data.humidity);
+                $('#last__weather__temp span').text(data[index.temperature]);
+                $('#last__weather__humidity span').text(data[index.humidity]);
                 $('#last__weather').animate({opacity: 0.1}, 500).animate({opacity: 1.0}, 500);
                 
                 //update graph
                 var chartDht22 = $('#dht22').highcharts();
-                var temperature = [data.datetime * 1000, data.temperature];
-                var humidity = [data.datetime * 1000, data.humidity];	
+                var temperature = [data[index.datetime] * 1000, data[index.temperature]];
+                var humidity = [data[index.datetime] * 1000, data[index.humidity]];	
                 chartDht22.series[0].addPoint(temperature, false, true);
                 chartDht22.series[1].addPoint(humidity, false, true);
                 chartDht22.redraw();   

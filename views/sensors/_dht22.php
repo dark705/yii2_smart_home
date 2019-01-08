@@ -95,11 +95,12 @@ use yii\web\View;
                     sensor: 'dht22',
                     $crfAjaxToken
                 },
-                success: function(data){
+                success: function(response){
                 var temperature = [], humidity = [];
-                	$.each(data, function(index, value){
-                        temperature.push([value.datetime * 1000, value.temperature]);
-                        humidity.push([value.datetime * 1000, value.humidity]);	
+                 var index = response.types; 
+                	$.each(response.data, function(i, data){
+                        temperature.push([data[index.datetime] * 1000, data[index.temperature]]);
+                        humidity.push([data[index.datetime] * 1000, data[index.humidity]]);	
                     });
                     chartDht22.series[0].setData(temperature, false);
                     chartDht22.series[1].setData(humidity, true);
