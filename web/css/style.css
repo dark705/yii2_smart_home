@@ -46,3 +46,66 @@
 	border: 1px solid gray;
 	margin: 1em;
 }
+
+
+#internet input
+{
+	margin-top: 10px;
+}
+#internet .online{
+	background-color:#d2ffd1;
+}
+#internet .offline{
+	background-color:#ffa0a0;
+}
+#internet .loading {
+	animation: blink 1.5s infinite;
+}
+
+#internet label {
+	display: inline;
+	max-width: none;
+	margin-bottom: 5px;
+	font-weight: normal;
+}
+
+@keyframes blink {
+	0% {opacity: 0.1}
+	25% {opacity: 1.0}
+	75% {opacity: 1.0}
+	100% {opacity: 0.1}
+}
+
+#popup{
+	display: none;
+}
+
+.popup__center
+{
+	z-index: 100;
+	top: 50%;
+	position: absolute;
+	left:0;
+	right:0;
+}
+
+.popup__center-to-left
+{
+	position: relative;
+	right: 50%;
+	float: right;
+}
+
+.popup__center-to-right
+{
+	position: relative;
+	right: -50%;
+}
+
+.popup__text
+{
+	border: 1px solid grey;
+	background-color: #aef;
+	font-size: 16px;
+	padding:10px;
+}

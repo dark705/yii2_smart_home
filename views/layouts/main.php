@@ -8,6 +8,8 @@
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\AppAsset;
+use yii\helpers\Html;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage(); ?>
@@ -18,6 +20,7 @@ AppAsset::register($this);
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <?= Html::csrfMetaTags() ?>
         <title>Управление</title>
         <?php $this->head(); ?>
     </head>
@@ -33,7 +36,7 @@ AppAsset::register($this);
             'class' => 'navbar-nav navbar-left small'],
         'items' => [
             ['label' => 'Сенсоры', 'url' => 'sensors'],
-
+            ['label' => 'Интернет', 'url' => 'internet'],
         ],
     ]);
     NavBar::end();

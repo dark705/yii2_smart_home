@@ -22,8 +22,20 @@ $config = [
         ],
         'db' => require 'db.php',
         'assetManager' =>[
-            'appendTimestamp' => true
+            'appendTimestamp' => true,
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,   // не опубликовывать комплект
+                    'js' => [
+                        '//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
+                    ]
+                ]
+            ]
         ]
+
+    ],
+    'params' => [
+        'gateway' => require 'gateway.php'
     ]
 ];
 
