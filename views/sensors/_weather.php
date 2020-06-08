@@ -11,10 +11,10 @@ use yii\web\View;
 ?>
     <?php
     echo Highstock::widget([
-        'id' => 'dht22',
+        'id' => 'weather',
         'options' => [
             'chart' => [
-                'height' => 500,
+                'height' => 700,
             ],
             'rangeSelector' => $rangeSelectorObj,
 
@@ -42,7 +42,7 @@ use yii\web\View;
                 'title' => [
                     'text' => 'Температура'
                 ],
-                'height' => '60%',
+                'height' => '40%',
                 'lineWidth' => 1,
                 'resize' => [
                     'enabled' => true
@@ -55,8 +55,20 @@ use yii\web\View;
                 'title' => [
                     'text' => 'Влажность'
                 ],
-                'top' => '65%',
-                'height' => '30%',
+                'top' => '43%',
+                'height' => '28%',
+                'offset' => 0,
+                'lineWidth' => 1
+            ],[
+                'labels' => [
+                    'align' => 'right',
+                    'x' => -3
+                ],
+                'title' => [
+                    'text' => 'Давление'
+                ],
+                'top' => '75%',
+                'height' => '28%',
                 'offset' => 0,
                 'lineWidth' => 1
             ]],
@@ -81,14 +93,18 @@ use yii\web\View;
                 'type' => 'spline',
                 'name' => '%',
                 'yAxis' => 1
+            ], [
+                'type' => 'spline',
+                'name' => 'мм',
+                'yAxis' => 2
             ]]
         ]
 
     ]);
     $this->registerJs(
         "
-            var chartDht22 = $('#dht22').highcharts();
-            chartDht22.showLoading();
+            var chartWeather = $('#weather').highcharts();
+            chartWeather.showLoading();
             $.ajax({  
                 method: 'POST',
                 data: {
@@ -102,9 +118,26 @@ use yii\web\View;
                         temperature.push([data[index.datetime] * 1000, data[index.temperature]]);
                         humidity.push([data[index.datetime] * 1000, data[index.humidity]]);	
                     });
-                    chartDht22.series[0].setData(temperature, false);
-                    chartDht22.series[1].setData(humidity, true);
-                    chartDht22.hideLoading();
+                    chartWeather.series[0].setData(temperature, false);
+                    chartWeather.series[1].setData(humidity, true);
+                    chartWeather.hideLoading();
+                }
+            });
+            
+            $.ajax({  
+                method: 'POST',
+                data: {
+                    sensor: 'bmp280',
+                    $crfAjaxToken
+                },
+                success: function(response){
+                var pressure = []
+                 var index = response.types; 
+                	$.each(response.data, function(i, data){
+                        pressure.push([data[index.datetime] * 1000, data[index.pressure]]);
+                    });
+                    chartWeather.series[2].setData(pressure, true);
+                    chartWeather.hideLoading();
                 }
             });
         ",
